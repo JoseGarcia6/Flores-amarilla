@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Para Ti 💛</title>
+    <style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: url('src/atardecre.jpg') no-repeat center center;
+    background-size: cover;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+  }
+
+      h1 {
+        position: absolute;
+        width: 100%;
+        top: 35%;
+        color: #84f108;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 3s ease-in-out;
+        padding: 0 20px;
+      }
+
+      .nombre {
+        display: block;
+        font-size: 3em;
+        color: #39f50a;
+        animation: brillo 2s infinite alternate;
+      }
+
+      @keyframes brillo {
+        from {
+          text-shadow:
+            0 0 10px #fff176,
+            0 0 20px #ffeb3b;
+        }
+        to {
+          text-shadow:
+            0 0 20px #fff,
+            0 0 40px #ffd700;
+        }
+      }
+
+      button {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        background: #b8860b;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .flower {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        pointer-events: auto;
+        animation: fall linear infinite;
+      }
+
+      .petal {
+        position: absolute;
+        width: 20px;
+        height: 30px;
+        background: yellow;
+        border-radius: 50%;
+        transform-origin: bottom center;
+      }
+
+      .center {
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        background: orange;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-60px) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(110vh) rotate(360deg);
+          opacity: 0.9;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>
+      Para ti, mi amor 💛<br />
+      Hoy florece algo hermoso entre nosotros
+      <span class="nombre">Tifany 💖</span>
+    </h1>
+
+    <audio id="musica" loop>
+      <source src="src/musica.mp3" type="audio/mpeg" />
+    </audio>
+
+    <button onclick="reproducirMusica()">💛 Tocar música</button>
+
+    <script>
+      const musica = document.getElementById("musica");
+
+      function reproducirMusica() {
+        musica.play();
+      }
+
+      function createFlower() {
+        const flower = document.createElement("div");
+        flower.classList.add("flower");
+
+        // Crear pétalos
+        for (let i = 0; i < 6; i++) {
+          const petal = document.createElement("div");
+          petal.classList.add("petal");
+          petal.style.transform = `rotate(${i * 60}deg) translateY(-10px)`;
+          flower.appendChild(petal);
+        }
+
+        // Centro
+        const center = document.createElement("div");
+        center.classList.add("center");
+        flower.appendChild(center);
+
+        flower.style.left = Math.random() * window.innerWidth + "px";
+        flower.style.animationDuration = 4 + Math.random() * 4 + "s";
+        flower.style.transform = `scale(${Math.random() + 0.5})`;
+
+        flower.addEventListener("click", () => {
+          musica.play();
+        });
+
+        document.body.appendChild(flower);
+
+        setTimeout(() => {
+          flower.remove();
+        }, 8000);
+      }
+
+      setInterval(createFlower, 400);
+    </script>
+
+    <!-- FOTOS -->
+    <div
+      style="
+        position: absolute;
+        bottom: 80px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      "
+    >
+      <img
+        src="src/foto1.jpg"
+        style="
+          width: 100px;
+          height: 100px;
+          object-fit: cover;
+          border-radius: 15px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        "
+      />
+      <img
+        src="src/foto2.jpg"
+        style="
+          width: 100px;
+          height: 100px;
+          object-fit: cover;
+          border-radius: 15px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        "
+      />
+      <img
+        src="src/foto3.jpg"
+        style="
+          width: 100px;
+          height: 100px;
+          object-fit: cover;
+          border-radius: 15px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        "
+      />
+    </div>
+  </body>
+</html>
