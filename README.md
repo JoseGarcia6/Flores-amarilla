@@ -26,6 +26,7 @@ Una pequeña página romántica, estática y adaptable a móviles, creada como d
 - Diseño adaptable a pantallas de escritorio y teléfonos.
 - Carta que se abre en una ventana interactiva.
 - Galería de fotos ampliables.
+- Sorpresa interactiva con un mensaje positivo y una lluvia breve de flores, corazones y destellos.
 - Control manual para reproducir y pausar la música.
 - Flores animadas con una cantidad limitada para reducir trabajo innecesario.
 - Respeta la preferencia del sistema por reducir animaciones.
