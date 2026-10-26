@@ -234,6 +234,22 @@
       filter: drop-shadow(0 3px 5px rgba(91, 63, 7, .14));
       animation: fall linear forwards;
     }
+    .burst {
+      position: fixed;
+      z-index: 12;
+      pointer-events: none;
+      user-select: none;
+      transform: translate(-50%, -50%);
+      animation: burst 1.45s cubic-bezier(.16,.72,.28,1) forwards;
+      filter: drop-shadow(0 3px 5px rgba(91, 63, 7, .16));
+      will-change: transform, opacity;
+    }
+    @keyframes burst {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(.35) rotate(-18deg); }
+      12% { opacity: 1; }
+      100% { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.15) rotate(35deg); }
+    }
+
     .modal {
       position: fixed;
       inset: 0;
