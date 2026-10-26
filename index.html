@@ -343,6 +343,7 @@
       <div class="actions">
         <button class="btn btn-primary" id="open-letter" type="button">💌 Abrir mi carta</button>
         <button class="btn btn-secondary" id="music-toggle" type="button" aria-pressed="false">♫ Escuchar música</button>
+        <button class="btn btn-secondary" id="open-surprise" type="button">✨ Una sorpresa</button>
       </div>
     </section>
 
@@ -380,6 +381,16 @@
     </article>
   </section>
 
+  <section class="modal" id="surprise-modal" role="dialog" aria-modal="true" aria-labelledby="surprise-title" hidden>
+    <article class="letter surprise-card">
+      <button class="close" type="button" data-close aria-label="Cerrar sorpresa">×</button>
+      <span class="big-flower" aria-hidden="true">🌻</span>
+      <h2 id="surprise-title">Un deseo para ti</h2>
+      <p class="surprise-text">Que nunca te falten motivos para sonreír, personas que te cuiden y días que brillen tanto como tú. 💛</p>
+      <button class="btn btn-primary" id="make-wish" type="button">🌼 Llenar de flores</button>
+    </article>
+  </section>
+
   <section class="modal" id="photo-modal" role="dialog" aria-modal="true" aria-label="Fotografía ampliada" hidden>
     <button class="close lightbox-close" type="button" data-close aria-label="Cerrar fotografía">×</button>
     <img class="lightbox-image" id="lightbox-image" src="" alt="">
@@ -391,6 +402,7 @@
       const musicButton = document.getElementById("music-toggle");
       const letterModal = document.getElementById("letter-modal");
       const photoModal = document.getElementById("photo-modal");
+      const surpriseModal = document.getElementById("surprise-modal");
       const lightboxImage = document.getElementById("lightbox-image");
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       let lastFocused = null;
@@ -432,6 +444,7 @@
       }
 
       document.getElementById("open-letter").addEventListener("click", () => openModal(letterModal));
+      document.getElementById("open-surprise").addEventListener("click", () => openModal(surpriseModal));
       document.querySelectorAll("[data-close]").forEach(button => {
         button.addEventListener("click", () => closeModal(button.closest(".modal")));
       });
@@ -444,8 +457,30 @@
         if (event.key === "Escape") {
           if (!letterModal.hidden) closeModal(letterModal);
           if (!photoModal.hidden) closeModal(photoModal);
+          if (!surpriseModal.hidden) closeModal(surpriseModal);
         }
       });
+
+      function flowerBurst() {
+        if (reduceMotion) return;
+        const symbols = ["🌼", "💛", "✨", "🌻", "💖"];
+        const originX = window.innerWidth / 2;
+        const originY = window.innerHeight / 2;
+        for (let i = 0; i < 28; i++) {
+          const item = document.createElement("span");
+          item.className = "burst";
+          item.setAttribute("aria-hidden", "true");
+          item.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+          item.style.left = originX + "px";
+          item.style.top = originY + "px";
+          item.style.fontSize = (16 + Math.random() * 20) + "px";
+          item.style.setProperty("--x", (Math.random() * 420 - 210) + "px");
+          item.style.setProperty("--y", (Math.random() * 520 - 260) + "px");
+          document.body.appendChild(item);
+          item.addEventListener("animationend", () => item.remove(), { once: true });
+        }
+      }
+      document.getElementById("make-wish").addEventListener("click", flowerBurst);
 
       document.querySelectorAll(".photo").forEach(button => {
         button.addEventListener("click", () => {
