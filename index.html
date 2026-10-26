@@ -1,212 +1,487 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Para Ti 💛</title>
-    <style>
-  body {
-    margin: 0;
-    overflow: hidden;
-    background: url('src/atardecre.jpg') no-repeat center center;
-    background-size: cover;
-    font-family: 'Segoe UI', sans-serif;
-    text-align: center;
-  }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8df">
+  <meta name="description" content="Un pequeño jardín de flores amarillas creado con mucho cariño para Tifany.">
+  <title>Un jardín para Tifany 💛</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --gold: #f5bd36;
+      --gold-deep: #a66c08;
+      --cream: #fff9e9;
+      --ink: #49391f;
+      --muted: #79684a;
+      --glass: rgba(255, 253, 245, .78);
+    }
 
-      h1 {
-        position: absolute;
-        width: 100%;
-        top: 35%;
-        color: #84f108;
-        font-size: 2.5em;
-        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-        animation: fadeIn 3s ease-in-out;
-        padding: 0 20px;
-      }
+    * { box-sizing: border-box; }
+    html { min-height: 100%; }
+    body {
+      min-height: 100svh;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--ink);
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background:
+        linear-gradient(135deg, rgba(255, 249, 226, .80), rgba(255, 239, 183, .48)),
+        url("src/atardecre.jpg") center / cover fixed,
+        #fff6d8;
+    }
+    button { font: inherit; }
+    button:focus-visible, a:focus-visible, img:focus-visible {
+      outline: 3px solid #8a5b00;
+      outline-offset: 4px;
+    }
 
-      .nombre {
-        display: block;
-        font-size: 3em;
-        color: #39f50a;
-        animation: brillo 2s infinite alternate;
-      }
+    .ambient {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(ellipse at center, transparent 15%, rgba(65, 43, 8, .13) 100%);
+    }
+    .glow {
+      position: absolute;
+      width: 24rem;
+      height: 24rem;
+      border-radius: 50%;
+      background: rgba(255, 219, 103, .22);
+      filter: blur(55px);
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+    .glow.one { top: -10rem; left: -7rem; }
+    .glow.two { right: -10rem; bottom: -9rem; animation-delay: -5s; }
 
-      @keyframes brillo {
-        from {
-          text-shadow:
-            0 0 10px #fff176,
-            0 0 20px #ffeb3b;
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(100% - 32px, 960px);
+      min-height: 100svh;
+      margin: 0 auto;
+      padding: clamp(24px, 5vw, 56px) 0 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0;
+      padding: 9px 15px;
+      border: 1px solid rgba(166, 108, 8, .18);
+      border-radius: 999px;
+      background: rgba(255, 252, 239, .68);
+      color: #855d12;
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      box-shadow: 0 8px 24px rgba(93, 65, 13, .06);
+      animation: rise-in .8s both;
+    }
+    .card {
+      width: 100%;
+      padding: clamp(24px, 5vw, 54px);
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, .78);
+      border-radius: 32px;
+      background: var(--glass);
+      box-shadow: 0 24px 80px rgba(74, 51, 10, .16);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      animation: rise-in 1s .08s both;
+    }
+    .flower-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 68px;
+      height: 68px;
+      margin-bottom: 12px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #fff0a6, #f7c742);
+      box-shadow: 0 8px 24px rgba(194, 133, 13, .22);
+      font-size: 2.15rem;
+      animation: bob 4s ease-in-out infinite;
+    }
+    h1 {
+      max-width: 760px;
+      margin: 0 auto;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.25rem, 7vw, 5rem);
+      font-weight: 500;
+      line-height: 1.04;
+      letter-spacing: -.045em;
+      text-wrap: balance;
+    }
+    h1 .name {
+      display: block;
+      margin-top: 8px;
+      color: #b17b12;
+      font-style: italic;
+      text-shadow: 0 3px 22px rgba(240, 188, 53, .24);
+    }
+    .intro {
+      max-width: 590px;
+      margin: 20px auto 0;
+      color: #675638;
+      font-size: clamp(1rem, 2.5vw, 1.18rem);
+      line-height: 1.75;
+      text-wrap: balance;
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+    .btn {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 12px 19px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary {
+      color: #fffdf6;
+      background: linear-gradient(135deg, #bd8618, #8c5c08);
+      box-shadow: 0 9px 22px rgba(137, 88, 6, .24);
+    }
+    .btn-primary:hover { box-shadow: 0 12px 26px rgba(137, 88, 6, .32); }
+    .btn-secondary {
+      color: #78520d;
+      border-color: rgba(166, 108, 8, .24);
+      background: rgba(255, 255, 255, .62);
+    }
+    .btn-secondary:hover { background: #fffdf6; }
+
+    .gallery-section { width: 100%; animation: rise-in 1s .2s both; }
+    .gallery-heading {
+      margin: 0 0 14px;
+      color: #fffdf3;
+      font-size: .88rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-align: center;
+      text-shadow: 0 2px 12px rgba(48, 34, 8, .6);
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      width: min(100%, 620px);
+      margin: 0 auto;
+    }
+    .photo {
+      position: relative;
+      display: block;
+      aspect-ratio: 1 / 1;
+      padding: 5px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .88);
+      border-radius: 20px;
+      background: rgba(255, 253, 245, .85);
+      box-shadow: 0 10px 30px rgba(51, 34, 7, .22);
+      cursor: zoom-in;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .photo:hover { transform: translateY(-5px) rotate(-1deg); box-shadow: 0 16px 34px rgba(51, 34, 7, .28); }
+    .photo:nth-child(2):hover { transform: translateY(-5px) rotate(1deg); }
+    .photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+    .caption {
+      margin: 13px 0 0;
+      color: #fffdf3;
+      font-size: .86rem;
+      text-align: center;
+      text-shadow: 0 2px 12px rgba(48, 34, 8, .72);
+    }
+    footer {
+      color: rgba(255, 253, 243, .94);
+      font-size: .78rem;
+      text-align: center;
+      text-shadow: 0 2px 10px rgba(48, 34, 8, .65);
+    }
+
+    .petal {
+      position: fixed;
+      top: -35px;
+      z-index: 2;
+      pointer-events: none;
+      user-select: none;
+      color: #f5c542;
+      opacity: .8;
+      filter: drop-shadow(0 3px 5px rgba(91, 63, 7, .14));
+      animation: fall linear forwards;
+    }
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(43, 32, 13, .56);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .modal[hidden] { display: none; }
+    .letter {
+      position: relative;
+      width: min(100%, 540px);
+      max-height: min(85svh, 760px);
+      overflow-y: auto;
+      padding: clamp(26px, 6vw, 44px);
+      border: 1px solid rgba(255,255,255,.9);
+      border-radius: 26px;
+      background: #fffaf0;
+      box-shadow: 0 25px 90px rgba(0,0,0,.28);
+      animation: rise-in .35s both;
+    }
+    .close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 40px;
+      height: 40px;
+      border: 0;
+      border-radius: 50%;
+      background: #f6edda;
+      color: #634715;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+    .letter h2 {
+      margin: 0 36px 18px 0;
+      color: #9b6b10;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-weight: 500;
+    }
+    .letter p {
+      color: #5e4b2d;
+      font-size: 1.03rem;
+      line-height: 1.85;
+    }
+    .signature { margin-top: 22px; color: #a36e0b !important; font-family: Georgia, serif; font-size: 1.25rem !important; font-style: italic; }
+    .lightbox-image {
+      display: block;
+      max-width: min(92vw, 900px);
+      max-height: 82svh;
+      object-fit: contain;
+      border: 5px solid #fffaf0;
+      border-radius: 18px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
+    }
+    .lightbox-close { top: 8px; right: 8px; }
+
+    @keyframes fall {
+      to { transform: translate3d(var(--drift), 110svh, 0) rotate(420deg); opacity: .08; }
+    }
+    @keyframes rise-in {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-6px) rotate(4deg); } }
+    @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(50px, 35px) scale(1.12); } }
+
+    @media (max-width: 560px) {
+      .page { width: min(100% - 22px, 460px); padding: 22px 0 18px; gap: 17px; }
+      .card { padding: 26px 19px; border-radius: 25px; }
+      .flower-mark { width: 54px; height: 54px; font-size: 1.8rem; }
+      .intro { margin-top: 15px; line-height: 1.6; }
+      .actions { margin-top: 22px; gap: 9px; }
+      .btn { min-height: 46px; padding: 11px 15px; font-size: .92rem; }
+      .gallery { gap: 9px; }
+      .photo { padding: 4px; border-radius: 15px; }
+      .photo img { border-radius: 11px; }
+      .caption { font-size: .78rem; }
+    }
+    @media (max-width: 360px) {
+      .actions { flex-direction: column; align-items: stretch; }
+      .gallery { gap: 6px; }
+      .photo { padding: 3px; border-radius: 12px; }
+      .photo img { border-radius: 9px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient" aria-hidden="true">
+    <span class="glow one"></span><span class="glow two"></span>
+  </div>
+
+  <main class="page">
+    <p class="eyebrow">✦ Un detalle hecho con cariño ✦</p>
+
+    <section class="card" aria-labelledby="main-title">
+      <div class="flower-mark" aria-hidden="true">🌼</div>
+      <h1 id="main-title">Un pequeño jardín <span class="name">para Tifany 💛</span></h1>
+      <p class="intro">Hay detalles sencillos que dicen mucho. Hoy quiero regalarte un rinconcito lleno de luz, flores amarillas y todo el cariño que cabe en estas palabras.</p>
+      <div class="actions">
+        <button class="btn btn-primary" id="open-letter" type="button">💌 Abrir mi carta</button>
+        <button class="btn btn-secondary" id="music-toggle" type="button" aria-pressed="false">♫ Escuchar música</button>
+      </div>
+    </section>
+
+    <section class="gallery-section" aria-label="Galería de recuerdos">
+      <h2 class="gallery-heading">PEQUEÑOS RECUERDOS, MUCHO CARIÑO</h2>
+      <div class="gallery">
+        <button class="photo" type="button" data-photo="src/foto1.jpg" data-alt="Un recuerdo especial, fotografía uno" aria-label="Ampliar fotografía uno">
+          <img src="src/foto1.jpg" alt="Un recuerdo especial" loading="lazy">
+        </button>
+        <button class="photo" type="button" data-photo="src/foto2.jpg" data-alt="Un recuerdo especial, fotografía dos" aria-label="Ampliar fotografía dos">
+          <img src="src/foto2.jpg" alt="Otro recuerdo bonito" loading="lazy">
+        </button>
+        <button class="photo" type="button" data-photo="src/foto3.jpg" data-alt="Un recuerdo especial, fotografía tres" aria-label="Ampliar fotografía tres">
+          <img src="src/foto3.jpg" alt="Un momento para recordar" loading="lazy">
+        </button>
+      </div>
+      <p class="caption">Toca una foto para verla más grande ✨</p>
+    </section>
+
+    <footer>Hecho con cariño y un puñado de flores amarillas 🌼</footer>
+  </main>
+
+  <audio id="musica" loop preload="none">
+    <source src="src/musica.mp3" type="audio/mpeg">
+    Tu navegador no puede reproducir este audio.
+  </audio>
+
+  <section class="modal" id="letter-modal" role="dialog" aria-modal="true" aria-labelledby="letter-title" hidden>
+    <article class="letter">
+      <button class="close" type="button" data-close aria-label="Cerrar carta">×</button>
+      <h2 id="letter-title">Para ti, Tifany 💛</h2>
+      <p>Quería regalarte algo diferente, un pequeño detalle que te recuerde lo especial que eres. Elegí las flores amarillas porque transmiten alegría, luz y esperanza, y porque a veces una flor puede decir lo que cuesta expresar con palabras.</p>
+      <p>Ojalá este pequeño jardín te saque una sonrisa y te acompañe un ratito bonito de tu día. No es un regalo enorme, pero está hecho con mucho cariño y pensando en ti.</p>
+      <p class="signature">Con mucho cariño, para ti. 🌼</p>
+    </article>
+  </section>
+
+  <section class="modal" id="photo-modal" role="dialog" aria-modal="true" aria-label="Fotografía ampliada" hidden>
+    <button class="close lightbox-close" type="button" data-close aria-label="Cerrar fotografía">×</button>
+    <img class="lightbox-image" id="lightbox-image" src="" alt="">
+  </section>
+
+  <script>
+    (() => {
+      const audio = document.getElementById("musica");
+      const musicButton = document.getElementById("music-toggle");
+      const letterModal = document.getElementById("letter-modal");
+      const photoModal = document.getElementById("photo-modal");
+      const lightboxImage = document.getElementById("lightbox-image");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let lastFocused = null;
+      let flowerTimer = null;
+
+      async function toggleMusic() {
+        if (audio.paused) {
+          try {
+            await audio.play();
+            musicButton.textContent = "Ⅱ Pausar música";
+            musicButton.setAttribute("aria-pressed", "true");
+          } catch (error) {
+            musicButton.textContent = "No se pudo reproducir";
+            musicButton.setAttribute("aria-pressed", "false");
+          }
+        } else {
+          audio.pause();
+          musicButton.textContent = "♫ Escuchar música";
+          musicButton.setAttribute("aria-pressed", "false");
         }
-        to {
-          text-shadow:
-            0 0 20px #fff,
-            0 0 40px #ffd700;
-        }
+      }
+      musicButton.addEventListener("click", toggleMusic);
+      audio.addEventListener("ended", () => {
+        musicButton.textContent = "♫ Escuchar música";
+        musicButton.setAttribute("aria-pressed", "false");
+      });
+
+      function openModal(modal) {
+        lastFocused = document.activeElement;
+        modal.hidden = false;
+        document.body.style.overflow = "hidden";
+        const focusTarget = modal.querySelector("button");
+        if (focusTarget) focusTarget.focus();
+      }
+      function closeModal(modal) {
+        modal.hidden = true;
+        document.body.style.overflow = "";
+        if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
       }
 
-      button {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 10px 20px;
-        border: none;
-        border-radius: 20px;
-        background: #b8860b;
-        color: white;
-        font-size: 16px;
-        cursor: pointer;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(-20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .flower {
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        pointer-events: auto;
-        animation: fall linear infinite;
-      }
-
-      .petal {
-        position: absolute;
-        width: 20px;
-        height: 30px;
-        background: yellow;
-        border-radius: 50%;
-        transform-origin: bottom center;
-      }
-
-      .center {
-        position: absolute;
-        width: 15px;
-        height: 15px;
-        background: orange;
-        border-radius: 50%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      @keyframes fall {
-        0% {
-          transform: translateY(-60px) rotate(0deg);
-          opacity: 1;
-        }
-        100% {
-          transform: translateY(110vh) rotate(360deg);
-          opacity: 0.9;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <h1>
-      Para ti, mi amor 💛<br />
-      Hoy florece algo hermoso entre nosotros
-      <span class="nombre">Tifany 💖</span>
-    </h1>
-
-    <audio id="musica" loop>
-      <source src="src/musica.mp3" type="audio/mpeg" />
-    </audio>
-
-    <button onclick="reproducirMusica()">💛 Tocar música</button>
-
-    <script>
-      const musica = document.getElementById("musica");
-
-      function reproducirMusica() {
-        musica.play();
-      }
-
-      function createFlower() {
-        const flower = document.createElement("div");
-        flower.classList.add("flower");
-
-        // Crear pétalos
-        for (let i = 0; i < 6; i++) {
-          const petal = document.createElement("div");
-          petal.classList.add("petal");
-          petal.style.transform = `rotate(${i * 60}deg) translateY(-10px)`;
-          flower.appendChild(petal);
-        }
-
-        // Centro
-        const center = document.createElement("div");
-        center.classList.add("center");
-        flower.appendChild(center);
-
-        flower.style.left = Math.random() * window.innerWidth + "px";
-        flower.style.animationDuration = 4 + Math.random() * 4 + "s";
-        flower.style.transform = `scale(${Math.random() + 0.5})`;
-
-        flower.addEventListener("click", () => {
-          musica.play();
+      document.getElementById("open-letter").addEventListener("click", () => openModal(letterModal));
+      document.querySelectorAll("[data-close]").forEach(button => {
+        button.addEventListener("click", () => closeModal(button.closest(".modal")));
+      });
+      [letterModal, photoModal].forEach(modal => {
+        modal.addEventListener("click", event => {
+          if (event.target === modal) closeModal(modal);
         });
+      });
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+          if (!letterModal.hidden) closeModal(letterModal);
+          if (!photoModal.hidden) closeModal(photoModal);
+        }
+      });
 
-        document.body.appendChild(flower);
+      document.querySelectorAll(".photo").forEach(button => {
+        button.addEventListener("click", () => {
+          const image = button.querySelector("img");
+          lightboxImage.src = button.dataset.photo;
+          lightboxImage.alt = image.alt;
+          openModal(photoModal);
+        });
+      });
 
-        setTimeout(() => {
-          flower.remove();
-        }, 8000);
+      function createPetal() {
+        if (document.hidden || document.querySelectorAll(".petal").length > 22) return;
+        const petal = document.createElement("span");
+        petal.className = "petal";
+        petal.setAttribute("aria-hidden", "true");
+        petal.textContent = Math.random() > .55 ? "🌼" : "✿";
+        petal.style.left = Math.random() * 100 + "vw";
+        petal.style.fontSize = (14 + Math.random() * 17) + "px";
+        petal.style.setProperty("--drift", (Math.random() * 150 - 75) + "px");
+        petal.style.animationDuration = (7 + Math.random() * 7) + "s";
+        document.body.appendChild(petal);
+        petal.addEventListener("animationend", () => petal.remove(), { once: true });
       }
-
-      setInterval(createFlower, 400);
-    </script>
-
-    <!-- FOTOS -->
-    <div
-      style="
-        position: absolute;
-        bottom: 80px;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        flex-wrap: wrap;
-      "
-    >
-      <img
-        src="src/foto1.jpg"
-        style="
-          width: 100px;
-          height: 100px;
-          object-fit: cover;
-          border-radius: 15px;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        "
-      />
-      <img
-        src="src/foto2.jpg"
-        style="
-          width: 100px;
-          height: 100px;
-          object-fit: cover;
-          border-radius: 15px;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        "
-      />
-      <img
-        src="src/foto3.jpg"
-        style="
-          width: 100px;
-          height: 100px;
-          object-fit: cover;
-          border-radius: 15px;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        "
-      />
-    </div>
-  </body>
+      if (!reduceMotion) {
+        for (let i = 0; i < 8; i++) setTimeout(createPetal, i * 240);
+        flowerTimer = window.setInterval(createPetal, 850);
+      }
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && flowerTimer) {
+          clearInterval(flowerTimer);
+          flowerTimer = null;
+        } else if (!document.hidden && !reduceMotion && !flowerTimer) {
+          flowerTimer = window.setInterval(createPetal, 850);
+        }
+      });
+    })();
+  </script>
+</body>
 </html>
