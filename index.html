@@ -448,7 +448,7 @@
       document.querySelectorAll("[data-close]").forEach(button => {
         button.addEventListener("click", () => closeModal(button.closest(".modal")));
       });
-      [letterModal, photoModal].forEach(modal => {
+      [letterModal, photoModal, surpriseModal].forEach(modal => {
         modal.addEventListener("click", event => {
           if (event.target === modal) closeModal(modal);
         });
